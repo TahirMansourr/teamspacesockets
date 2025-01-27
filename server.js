@@ -1,9 +1,13 @@
 const { createServer } = require("node:http");
 const { Server } = require("socket.io");
 
-const port = process.env.PORT || 8080
+const port = process.env.PORT || 8080;
 
-const httpServer = createServer();
+const httpServer = createServer((req, res) => {
+  res.writeHead(200, { "Content-Type": "text/plain" });
+  res.end("Socket.IO server is running\n");
+});
+
 const io = new Server(httpServer, {
   cors: {
     origin: "*", // Allow requests from your Next.js app (Vercel URL)
@@ -18,7 +22,6 @@ io.on("connection", (socket) => {
     socket.join(roomName);
     console.log(`🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱${username} joined room: ${roomName}`);
   });
-
 
   socket.on("hello", (value) => {
     console.log("iwasclicked", value);
@@ -61,7 +64,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
-    console.log("User disconnected");
+    console.log("User disconnected:", socket.id);
   });
 });
 
