@@ -18,9 +18,11 @@ const io = new Server(httpServer, {
 io.on("connection", (socket) => {
   console.log("A user connected:", socket.id);
 
-  socket.on("joinRoom", ({ roomName, username }) => {
+  socket.on("joinRoom", ({ roomName, username }, callback) => {
     socket.join(roomName);
-    console.log(`🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱${username} joined room: ${roomName}`);
+    console.log(`${username} joined room: ${roomName}`);
+    // Send acknowledgment back to the client
+    callback({ success: true, message: `Joined room: ${roomName}` });
   });
 
   socket.on("hello", (value) => {
@@ -59,12 +61,12 @@ io.on("connection", (socket) => {
   });
 
   socket.on("updateIssue", (value) => {
-    console.log("received Issue", value);
+    console.log("🎁🎁🎁🎁🎁🎁received Issue", value);
     io.emit("updateIssue", value);
   });
 
-  socket.on("disconnect", () => {
-    console.log("User disconnected:", socket.id);
+  socket.on("disconnect", (reason) => {
+    console.log("User disconnected:", socket.id , reason);
   });
 });
 
