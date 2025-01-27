@@ -16,7 +16,7 @@ io.on("connection", (socket) => {
 
   socket.on("joinRoom", ({ roomName, username }) => {
     socket.join(roomName);
-    console.log(`${username} joined room: ${roomName}`);
+    console.log(`🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱${username} joined room: ${roomName}`);
   });
 
 
